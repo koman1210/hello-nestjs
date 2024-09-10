@@ -4,9 +4,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Logger } from '@nestjs/common';
 
 import { UserModule } from './users/users.module'; 
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './users/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +21,8 @@ import { AppService } from './app.service';
         return { uri };
       }
     }),
-    UserModule
+    UserModule,
+    AuthModule
   ]
 })
 export class AppModule implements OnModuleInit {

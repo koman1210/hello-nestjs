@@ -29,3 +29,13 @@ export class CreateUserDto {
   @IsOptional() // Address có thể là tùy chọn
   address?: string;
 }
+
+export class LoginDto {
+  @IsString()
+  @IsNotEmpty()
+  username: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
