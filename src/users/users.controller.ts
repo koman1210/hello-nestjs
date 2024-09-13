@@ -1,25 +1,14 @@
 import { Controller, Post, Get, Patch, Delete, Body, Param, Query, BadRequestException } from '@nestjs/common';
 import { UserService } from './user.service';
-// import  { AuthController } from "./auth.controller"
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { LoginDto } from './dto/login.dto';
-import { AuthDto } from './dto/auth.dto';
+import { LoginDto } from '../auth/dto/login.dto';
+
 
 @Controller('users')
 export class UserController {
   authService: any;
   constructor(private readonly userService: UserService) {}
-
-
-  // constructor(private dependency:  UserService | AuthService) {
-  //   if (dependency instanceof  UserService) {
-  //     // Xử lý logic khi dependency là UserRepository
-  //   } else if (dependency instanceof AuthService) {
-  //     // Xử lý logic khi dependency là AuthService
-  //   }
-  
-
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
