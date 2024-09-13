@@ -1,11 +1,20 @@
-import { Schema } from "mongoose";
+import { Schema, Document } from 'mongoose';
 
 export const UserSchema = new Schema({
-    fullname: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    phonenumber: { type: String, required: true },
-    address: { type: String, required: false }
+  fullname: { type: String, required: true },
+  username: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+  phoneNumber: { type: String },
+  email: { type: String, unique: true },
+  address: { type: String },
 });
+
+export interface User extends Document {
+  id: string;
+  fullname: string;
+  username: string;
+  password: string;
+  phoneNumber?: string;
+  email?: string;
+  address?: string;
+}

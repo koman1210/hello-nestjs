@@ -1,16 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from './interface/user.interface';
+import { User } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel('User')
+    private readonly userModel: Model<User>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
@@ -21,13 +22,25 @@ export class AuthService {
     return null;
   }
 
-  async login(username: string, password: string): Promise<string> {
+  async login(username: string, password: string) {
     const user = await this.validateUser(username, password);
-    console.log('user: ', user)
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
+  //   const jwt = await this.jwtService.signAsync({ user });
+  //   return { token: jwt }
+  // }
+
+  //   async verifyJwt(jwt: string): Promise<{exp: number}>{
+
+  //   }
     const payload = { username: user.username };
-    return this.jwtService.sign(payload);
+    console.log("errrrrrrrrr: ", this.jwtService)
+    const data = this.jwtService.sign(payload, {
+      secret: "secret",
+      expiresIn: '60s'
+    });
+
+    console.log('data: ', data)
   }
 }

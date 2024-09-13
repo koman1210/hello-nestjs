@@ -7,18 +7,16 @@ import { UserService } from '../users/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-  ) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET, // Bạn nên lưu trữ bí mật trong biến môi trường
+      secretOrKey: 'secret'
     });
   }
 
+
   async validate(payload: any) {
-    return { username: payload.username };
+    return { ...payload.username };
   }
 }
