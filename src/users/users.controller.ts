@@ -1,5 +1,7 @@
 import { Controller, Post, Get, Patch, Delete, Body, Param, Query, BadRequestException } from '@nestjs/common';
+
 import { UserService } from './user.service';
+import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from '../auth/dto/login.dto';
@@ -7,8 +9,9 @@ import { LoginDto } from '../auth/dto/login.dto';
 
 @Controller('users')
 export class UserController {
-  authService: any;
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) {}
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
